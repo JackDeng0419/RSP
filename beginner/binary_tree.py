@@ -54,11 +54,30 @@ class BinaryTree:
             self.root.right.postorder()
         print(self.root.data)
 
-    # def deleteNode(self, data):
-    #     if self.root:
-    #         if data < self.root.data:
-    #             self.root.left =
-    #     return self.root
+    def delete(self, data):
+        if self.root is None:
+            return None
+        if data < self.root.data:
+            if self.root.left is not None:
+                self.root.left = self.root.left.delete(data)
+        elif data > self.root.data:
+            if self.root.right is not None:
+                self.root.right = self.root.right.delete(data)
+        else:
+            if self.root.left is None:
+                temp = self.root.right
+                self.root = None
+                return temp
+            elif self.root.right is None:
+                temp = self.root.left
+                self.root = None
+                return temp
+            temp = self.root.right
+            while temp.root.left is not None:
+                temp = temp.root.left
+            self.root.data = temp.root.data
+            self.root.right = self.root.right.delete(temp.root.data)
+        return self
 
 
 if __name__ == "__main__":
@@ -70,6 +89,8 @@ if __name__ == "__main__":
     tree.insert(70)
     tree.insert(60)
     tree.insert(80)
+
+    tree.delete(50)
 
     print("Inorder traversal of the original tree:")
     tree.inorder()
