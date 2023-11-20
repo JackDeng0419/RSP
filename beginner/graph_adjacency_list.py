@@ -26,6 +26,42 @@ class Graph:
         for vertex in self.adj_list:
             print(f"{vertex}: {self.adj_list[vertex]}")
 
+    def dfs(self, start):
+        visited = {}
+        for vertex in self.adj_list:
+            visited[vertex] = False
+
+        # create a stack
+        stack = []
+        stack.append(start)
+        visited[start] = True
+
+        while stack:
+            vertex = stack.pop()
+            print(vertex)
+            for neighbor in self.adj_list[vertex]:
+                if not visited[neighbor]:
+                    stack.append(neighbor)
+                    visited[neighbor] = True
+
+    def bfs(self, start):
+        visited = {}
+        for vertex in self.adj_list:
+            visited[vertex] = False
+
+        # create a queue
+        queue = []
+        queue.append(start)
+        visited[start] = True
+
+        while queue:
+            vertex = queue.pop(0)
+            print(vertex)
+            for neighbor in self.adj_list[vertex]:
+                if not visited[neighbor]:
+                    queue.append(neighbor)
+                    visited[neighbor] = True
+
 
 if __name__ == "__main__":
     graph = Graph()
@@ -44,6 +80,15 @@ if __name__ == "__main__":
     graph.add_edge("E", "F")
     graph.display()
     print()
+
+    print("DFS")
+    graph.dfs("A")
+    print()
+
+    print("BFS")
+    graph.bfs("A")
+    print()
+
     graph.remove_vertex("E")
     graph.display()
     print()
